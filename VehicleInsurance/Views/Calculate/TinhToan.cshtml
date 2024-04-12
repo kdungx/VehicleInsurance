@@ -1,0 +1,104 @@
+﻿@model VehicleInsurance.Controllers.Calculate
+
+@{
+    ViewData["Title"] = "Tinh Toan";
+}
+<h2>Thông tin về Bảo Hiểm Xe Hơi</h2>
+<form action="#" method="post">
+    <label for="loai-xe">Loại xe:</label><br>
+    <select class="form-control" id="loai-xe" onchange="hienThiMucDichSuDung()">
+        <option></option>
+        <option>ô tô chở người không KDVT</option>
+        <option>ô tô chở người KDVT</option>
+        <option>ô tô bán tải</option>
+        <option>ô tô chở hàng</option>
+    </select><br>
+    <div id="muc-dich-su-dung-group1" style="display: none;">
+        <label for="muc-dich-su-dung">Mục đích sử dụng:</label><br>
+        <select id="muc-dich-su-dung">
+            <option></option>
+            <option>không kinh doanh</option>
+            <option>kinh doanh</option>
+        </select><br>
+    </div>
+    <div id="muc-dich-su-dung-group2" style="display: none;">
+        <label for="muc-dich-su-dung">Mục đích sử dụng: </label><br>
+        <select id="muc-dich-su-dung">
+            <option></option>
+            <option>Dưới 3 tấn </option>
+            <option> 3-8 tấn</option>
+            <option> 8-15 tấn</option>
+            <option>Trên 15 tấn</option>
+        </select><br>
+    </div>
+
+
+
+    <label for="so-cho-ngoi">Số chỗ ngồi:</label><br>
+    <input type="number" id="so-cho-ngoi" name="so-cho-ngoi"><br>
+
+    <label>Thời gian bảo hiểm:</label><br>
+    <input type="radio" id="mot-nam" name="thoi-gian-bao-hiem" value="1" onchange="tinhNgayKetThuc()">
+    <label for="mot-nam">1 năm</label><br>
+    <input type="radio" id="hai-nam" name="thoi-gian-bao-hiem" value="2" onchange="tinhNgayKetThuc()">
+    <label for="hai-nam">2 năm</label><br>
+    <input type="radio" id="theo-thong-tin-kiem-dinh" name="thoi-gian-bao-hiem" value="theo-thong-tin-kiem-dinh" onchange="tinhNgayKetThuc()">
+    <label for="theo-thong-tin-kiem-dinh">Theo thông tin kiểm định</label><br>
+
+    <label for="ngay-bat-dau">Ngày bắt đầu:</label><br>
+    <input type="date" id="ngay-bat-dau" name="ngay-bat-dau" onchange="tinhNgayKetThuc()"><br>
+    <label for="gio-bat-dau">Giờ bắt đầu:</label><br>
+    <input type="time" id="gio-bat-dau" name="gio-bat-dau" onchange="tinhNgayKetThuc()"><br>
+
+    <label for="ngay-ket-thuc">Ngày kết thúc:</label><br>
+    <input type="date" id="ngay-ket-thuc" name="ngay-ket-thuc" readonly><br>
+
+    <label for="gio-ket-thuc">Giờ kết thúc:</label><br>
+    <input type="time" id="gio-ket-thuc" name="gio-ket-thuc" readonly><br>
+
+    <label for="ma-gioi-thieu">Mã giới thiệu (Nếu có):</label><br>
+
+    <input type="text" id="ma-gioi-thieu" name="ma-gioi-thieu"><br>
+
+    <input type="checkbox" id="dong-y" name="dong-y" required>
+    <label for="dong-y">Tôi đã đọc và đồng ý với các điều khoản của hợp đồng bảo hiểm.</label><br>
+
+    <input type="submit" value="Gửi Đơn Đăng Ký">
+</form>
+
+<script>
+    function hienThiMucDichSuDung() {
+        var loaiXe = document.getElementById("loai-xe").value;
+        var mucDichSuDungGroup1 = document.getElementById("muc-dich-su-dung-group1");
+        var mucDichSuDungGroup2 = document.getElementById("muc-dich-su-dung-group2");
+        if (loaiXe === "ô tô bán tải") {
+            mucDichSuDungGroup1.style.display = "block";
+        } else {
+            mucDichSuDungGroup1.style.display = "none";
+        }
+        if (loaiXe === "ô tô chở hàng") {
+            mucDichSuDungGroup2.style.display = "block";
+        } else {
+            mucDichSuDungGroup2.style.display = "none";
+        }
+    }
+    function tinhNgayKetThuc() {
+        var ngayBatDau = new Date(document.getElementById("ngay-bat-dau").value);
+        var thoiGianBaoHiem = document.querySelector('input[name="thoi-gian-bao-hiem"]:checked').value;
+
+        if (thoiGianBaoHiem === "theo-thong-tin-kiem-dinh") {
+            document.getElementById('ngay-ket-thuc').removeAttribute('readonly');
+        } else {
+            var soNam = parseInt(thoiGianBaoHiem);
+            ngayBatDau.setFullYear(ngayBatDau.getFullYear() + soNam);
+            var ngayKetThucInput = document.getElementById("ngay-ket-thuc");
+            ngayKetThucInput.value = ngayBatDau.toISOString().split('T')[0];
+            ngayKetThucInput.setAttribute('readonly', 'readonly');
+
+            var gioBatDau = document.getElementById("gio-bat-dau").value;
+            var gioKetThucInput = document.getElementById("gio-ket-thuc");
+            gioKetThucInput.value = gioBatDau;
+            gioKetThucInput.setAttribute('readonly', 'readonly');
+        }
+    }
+</script>
