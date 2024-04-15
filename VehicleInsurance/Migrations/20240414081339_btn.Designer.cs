@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VehicleInsurance.Data;
 
@@ -11,9 +12,11 @@ using VehicleInsurance.Data;
 namespace VehicleInsurance.Migrations
 {
     [DbContext(typeof(VehicleInsuranceContext))]
-    partial class VehicleInsuranceContextModelSnapshot : ModelSnapshot
+    [Migration("20240414081339_btn")]
+    partial class btn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

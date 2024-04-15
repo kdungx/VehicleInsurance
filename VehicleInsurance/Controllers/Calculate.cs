@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VehicleInsurance.Data;
+using VehicleInsurance.Models;
 
 namespace VehicleInsurance.Controllers
 {
@@ -16,5 +17,16 @@ namespace VehicleInsurance.Controllers
 		{
 			return View();
 		}
+		[HttpPost]
+		public IActionResult TinhToan( btn modle)
+		{
+			if (ModelState.IsValid) {
+                db.Add(modle);
+                db.SaveChanges();
+               
+            }
+            return View(modle);
+
+        }
 	}
 }
