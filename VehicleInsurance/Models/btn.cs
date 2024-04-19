@@ -34,6 +34,9 @@ namespace VehicleInsurance.Models
         public string ? MaGioiThieu { get; set; }
 
         [Required(ErrorMessage = "Bạn phải đồng ý với các điều khoản.")]
+        
         public bool  DongY { get; set; }
+      
+
     }
 }

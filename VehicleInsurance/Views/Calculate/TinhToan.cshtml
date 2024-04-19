@@ -3,116 +3,670 @@
 @{
     ViewData["Title"] = "Tinh Toan";
 }
-<h2>Thông tin về Bảo Hiểm Xe Hơi</h2>
-<form action="#" method="post">
-    <label for="loai-xe">Loại xe:</label><br>
-    
-    <select asp-for="LoaiXe" class="form-control" id="loai-xe" onchange="hienThiMucDichSuDung()">
-        <option></option>
-        <option>ô tô chở người không KDVT</option>
-        <option>ô tô chở người KDVT</option>
-        <option>ô tô bán tải</option>
-        <option>ô tô chở hàng</option>
-        
-    </select><br>
-    <span asp-validation-for="LoaiXe" class="text-danger"></span>
-
-    <div id="muc-dich-su-dung-group1" style="display: none;">
-        <label for="muc-dich-su-dung">Mục đích sử dụng:</label><br>
-        <select asp-for="MucDichSuDung" id="muc-dich-su-dung">
-            <option></option>
-            <option>không kinh doanh</option>
-            <option>kinh doanh</option>
-        </select><br>
-    </div>
-    <div id="muc-dich-su-dung-group2" style="display: none;">
-        <label for="muc-dich-su-dung">Mục đích sử dụng: </label><br>
-        <select asp-for="MucDichSuDung" id="muc-dich-su-dung">
-            <option></option>
-            <option>Dưới 3 tấn </option>
-            <option> 3-8 tấn</option>
-            <option> 8-15 tấn</option>
-            <option>Trên 15 tấn</option>
-        </select><br>
-    </div>
-
-    
-    <div class="form-group">
-        <label for="so-cho-ngoi">Số chỗ ngồi:</label><br>
-        <input asp-for="SoChoNgoi" class="form-control" />
-        <span asp-validation-for="SoChoNgoi" class="text-danger"></span>
-    </div>
-    
-    
-    <label>Thời gian bảo hiểm:</label><br>
-    
-    <input asp-for="ThoiGianBaoHiem" type="radio" id="mot-nam"  name="thoi-gian-bao-hiem" value="1" onchange="tinhNgayKetThuc()">
-    <label for="mot-nam">1 năm</label><br>
-    <input asp-for="ThoiGianBaoHiem" type="radio" id="hai-nam" name="thoi-gian-bao-hiem" value="2" onchange="tinhNgayKetThuc()">
-    <label for="hai-nam">2 năm</label><br>
-    <input  type="radio" id="theo-thong-tin-kiem-dinh" name="thoi-gian-bao-hiem" value="theo-thong-tin-kiem-dinh" onchange="tinhNgayKetThuc()">
-    <label for="theo-thong-tin-kiem-dinh">Theo thông tin kiểm định</label><br>
-
-    <label for="ngay-bat-dau">Ngày bắt đầu:</label><br>
-    <span asp-validation-for="NgayBatDau" class="text-danger"></span><br>
-    <input type="date" id="ngay-bat-dau" asp-for="NgayBatDau" onchange="tinhNgayKetThuc()"><br>
-    <label for="gio-bat-dau">Giờ bắt đầu:</label><br>
-    <span asp-validation-for="GioBatDau" class="text-danger"></span><br>
-    <input type="time" id="gio-bat-dau" asp-for="GioBatDau" onchange="tinhNgayKetThuc()"><br>
-
-    <label for="ngay-ket-thuc">Ngày kết thúc:</label><br>
-    <span asp-validation-for="NgayKetThuc" class="text-danger"></span><br>
-    <input type="date" id="ngay-ket-thuc" asp-for="NgayKetThuc" readonly><br>
-
-    <label for="gio-ket-thuc">Giờ kết thúc:</label><br>
-    <span asp-validation-for="GioKetThuc" class="text-danger"></span><br>
-    <input type="time" id="gio-ket-thuc" asp-for="GioKetThuc" readonly><br>
-
-
-    <label for="ma-gioi-thieu">Mã giới thiệu (Nếu có):</label><br>
-
-    <input type="text" id="ma-gioi-thieu" name="ma-gioi-thieu"><br>
-
-    <span asp-validation-for="DongY" class="text-danger"></span><br>
-    <input  type="checkbox" id="dong-y" name="dong-y" required >
-    <label for="dong-y">Tôi đã đọc và đồng ý với các điều khoản của hợp đồng bảo hiểm.</label><br>
-
-    <input type="submit" value="Gửi Đơn Đăng Ký">
-</form>
-
-<script>
-    function hienThiMucDichSuDung() {
-        var loaiXe = document.getElementById("loai-xe").value;
-        var mucDichSuDungGroup1 = document.getElementById("muc-dich-su-dung-group1");
-        var mucDichSuDungGroup2 = document.getElementById("muc-dich-su-dung-group2");
-        if (loaiXe === "ô tô bán tải") {
-            mucDichSuDungGroup1.style.display = "block";
-        } else {
-            mucDichSuDungGroup1.style.display = "none";
-        }
-        if (loaiXe === "ô tô chở hàng") {
-            mucDichSuDungGroup2.style.display = "block";
-        } else {
-            mucDichSuDungGroup2.style.display = "none";
-        }
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
     }
-    function tinhNgayKetThuc() {
-        var ngayBatDau = new Date(document.getElementById("ngay-bat-dau").value);
-        var thoiGianBaoHiem = document.querySelector('input[name="thoi-gian-bao-hiem"]:checked').value;
 
-        if (thoiGianBaoHiem === "theo-thong-tin-kiem-dinh") {
-            document.getElementById('ngay-ket-thuc').removeAttribute('readonly');
-        } else {
-            var soNam = parseInt(thoiGianBaoHiem);
-            ngayBatDau.setFullYear(ngayBatDau.getFullYear() + soNam);
-            var ngayKetThucInput = document.getElementById("ngay-ket-thuc");
-            ngayKetThucInput.value = ngayBatDau.toISOString().split('T')[0];
-            ngayKetThucInput.setAttribute('readonly', 'readonly');
-
-            var gioBatDau = document.getElementById("gio-bat-dau").value;
-            var gioKetThucInput = document.getElementById("gio-ket-thuc");
-            gioKetThucInput.value = gioBatDau;
-            gioKetThucInput.setAttribute('readonly', 'readonly');
-        }
+    html {
+        height: 100%;
     }
-</script>
+
+    /*Background color*/
+    #grad1 {
+        background-color: #9C27B0;
+        background-image: linear-gradient(120deg, #FF4081, #81D4FA);
+    }
+
+    /*form styles*/
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px;
+    }
+
+        #msform fieldset .form-card {
+            background: white;
+            border: 0 none;
+            border-radius: 0px;
+            box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px 30px 40px;
+            box-sizing: border-box;
+            width: 94%;
+            margin: 0 3% 20px 3%;
+            /*stacking fieldsets above each other*/
+            position: relative;
+        }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 20px;
+            /*stacking fieldsets above each other*/
+            position: relative;
+        }
+
+            /*Hide all except first fieldset*/
+            #msform fieldset:not(:first-of-type) {
+                display: none;
+            }
+
+            #msform fieldset .form-card {
+                text-align: left;
+                color: #9E9E9E;
+            }
+
+        #msform input, #msform textarea {
+            padding: 0px 8px 4px 8px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 25px;
+            margin-top: 2px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+            #msform input:focus, #msform textarea:focus {
+                -moz-box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+                border: none;
+                font-weight: bold;
+                border-bottom: 2px solid skyblue;
+                outline-width: 0;
+            }
+
+        /*Blue Buttons*/
+        #msform .action-button {
+            width: 100px;
+            background: skyblue;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button:hover, #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue;
+            }
+
+        /*Previous Buttons*/
+        #msform .action-button-previous {
+            width: 100px;
+            background: #616161;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px;
+        }
+
+            #msform .action-button-previous:hover, #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #616161;
+            }
+
+    /*Dropdown List Exp Date*/
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px;
+    }
+
+        select.list-dt:focus {
+            border-bottom: 2px solid skyblue;
+        }
+
+    /*The background card*/
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+
+    /*FieldSet headings*/
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /*progressbar*/
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey;
+    }
+
+        #progressbar .active {
+            color: #000000;
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: 12px;
+            width: 25%;
+            float: left;
+            position: relative;
+        }
+
+        /*Icons in the ProgressBar*/
+        #progressbar #account:before {
+            font-family: FontAwesome;
+            content: "\f023";
+        }
+
+        #progressbar #personal:before {
+            font-family: FontAwesome;
+            content: "\f007";
+        }
+
+        #progressbar #payment:before {
+            font-family: FontAwesome;
+            content: "\f09d";
+        }
+
+        #progressbar #confirm:before {
+            font-family: FontAwesome;
+            content: "\f00c";
+        }
+
+        /*ProgressBar before any progress*/
+        #progressbar li:before {
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px;
+        }
+
+        /*ProgressBar connectors*/
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1;
+        }
+
+        /*Color number of the step and the connector before it*/
+        #progressbar li.active:before, #progressbar li.active:after {
+            background: skyblue;
+        }
+
+    /*Imaged Radio Buttons*/
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+
+    .radio {
+        display: inline-block;
+        width: 204;
+        height: 104;
+        border-radius: 0;
+        background: lightblue;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px;
+    }
+
+        .radio:hover {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .radio.selected {
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+    /*Fit image in bootstrap div*/
+    .fit-image {
+        width: 100%;
+        object-fit: cover;
+    }
+</style>
+/<div style="margin-top: 86px;">
+
+    <form id="msform" method="post" class="needs-validation" novalidate>
+        <!-- progressbar -->
+        <ul id="progressbar">
+            <li class="active" id="account"><strong>Account</strong></li>
+            <li id="personal"><strong>Personal</strong></li>
+            <li id="payment"><strong>Payment</strong></li>
+            <li id="confirm"><strong>Finish</strong></li>
+        </ul>
+        <!-- fieldsets -->
+        <fieldset>
+            <div class="form-card">
+                <h2 class="fs-title">Account Information</h2>
+                <div class="form-group">
+                    <label for="loai-xe">Loại xe:</label>
+                    <select asp-for="LoaiXe" class="form-control" id="loai-xe" onchange="hienThiMucDichSuDung()" required>
+                        <option value="">Chọn loại xe</option>
+                        <option>ô tô chở người không KDVT</option>
+                        <option>ô tô chở người KDVT</option>
+                        <option>ô tô bán tải</option>
+                        <option>ô tô chở hàng</option>
+                    </select>
+                    <span asp-validation-for="LoaiXe" class="text-danger"></span>
+                </div>
+                <div id="muc-dich-su-dung-group1" class="form-group" style="display: none;">
+                    <label for="muc-dich-su-dung">Mục đích sử dụng:</label>
+                    <select asp-for="MucDichSuDung" id="muc-dich-su-dung" class="form-control">
+                        <option></option>
+                        <option>không kinh doanh</option>
+                        <option>kinh doanh</option>
+                    </select>
+                </div>
+                <div id="muc-dich-su-dung-group2" class="form-group" style="display: none;">
+                    <label for="muc-dich-su-dung">Mục đích sử dụng:</label>
+                    <select asp-for="MucDichSuDung" id="muc-dich-su-dung" class="form-control">
+                        <option></option>
+                        <option>Dưới 3 tấn</option>
+                        <option>3-8 tấn</option>
+                        <option>8-15 tấn</option>
+                        <option>Trên 15 tấn</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="so-cho-ngoi">Số chỗ ngồi:</label>
+                    <input asp-for="SoChoNgoi" class="form-control" id="so-cho-ngoi" required>
+                    <span asp-validation-for="SoChoNgoi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Thời gian bảo hiểm:</label>
+                    <select asp-for="ThoiGianBaoHiem" class="form-control" id="thoi-gian-bao-hiem" onchange="tinhNgayKetThuc()" required>
+                        <option value="">Chọn thời gian bảo hiểm</option>
+                        <option value="1">1 năm</option>
+                        <option value="2">2 năm</option>
+                        <option value="theo-thong-tin-kiem-dinh">Theo thông tin kiểm định</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ngay-bat-dau">Ngày bắt đầu:</label>
+                            <input type="date" id="ngay-bat-dau" asp-for="NgayBatDau" class="form-control" onchange="tinhNgayKetThuc()" required>
+                            <span asp-validation-for="NgayBatDau" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ngay-ket-thuc">Ngày kết thúc:</label>
+                            <input type="date" id="ngay-ket-thuc" asp-for="NgayKetThuc" class="form-control" readonly>
+                            <span asp-validation-for="NgayKetThuc" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="gio-bat-dau">Giờ bắt đầu:</label>
+                            <input type="time" id="gio-bat-dau" asp-for="GioBatDau" class="form-control" onchange="tinhNgayKetThuc()" required>
+                            <span asp-validation-for="GioBatDau" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="gio-ket-thuc">Giờ kết thúc:</label>
+                            <input type="time" id="gio-ket-thuc" asp-for="GioKetThuc" class="form-control" readonly>
+                            <span asp-validation-for="GioKetThuc" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="ma-gioi-thieu">Mã giới thiệu (Nếu có):</label>
+                    <input type="text" id="ma-gioi-thieu" name="ma-gioi-thieu" class="form-control">
+                </div>
+
+            </div>
+            <div><input type="submit" name="tinhphi"  class=" action-button" value="Tinh Phí" /></div>
+
+
+            <div id="bao-hiem-tnsd" class="form-card">
+                <h4 style="color: #000000;">Bảo hiểm TNDS bắt buộc</h4>
+                <div class="row" style="padding-top:20px ;">
+                    <div class="col">
+                        <div class="form-group">
+                            <div>
+                                <span style="border-radius: 4px;
+                                                    font-weight: 500;
+                                                    color: black;
+                                                    padding: 5px;
+                                                    background-color: #81D4FA;
+                                                    margin-right: 15px;">Bên thứ ba</span>Thiệt hại về người
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <p style="float: right;color: black; font-weight: 500;">150 triệu đồng</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" style="padding-top:20px ;">
+                    <div class="col">
+                        <div class="form-group">
+                            <div>
+                                <span style="border-radius: 4px;
+                                                    font-weight: 500;
+                                                    color: black;
+                                                    padding: 5px;
+                                                    background-color: #81D4FA;
+                                                    margin-right: 15px;">Bên thứ ba</span>Thiệt hại về tài sản
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <p style="float: right;color: black; font-weight: 500;">100 triệu đồng</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="form-group mt-3" style="text-align: center; font-size: 24px;
+    color: black;">
+                    <label for="phi-bao-hiem">Phí bảo hiểm:</label><br>
+                    <span id="phi-bao-hiem" class="font-weight-bold" style="color:orange; font-size: 24px;">@ViewBag.PhiBaoHiem</span>
+
+                </div>
+
+            </div>
+           
+            <br>
+            <input type="button" id="nextform"  name="next" class="next action-button" value="Next Step" />
+
+        </fieldset>
+        <fieldset>
+            <div class="form-card">
+                <h2 class="fs-title">Personal Information</h2>
+                <div class="form-group">
+                    <label for="so-cmnd">Số CMND/CCCD:</label>
+                    <input type="text" id="so-cmnd" name="so-cmnd" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ho-ten">Họ và tên:</label>
+                    <input type="text" id="ho-ten" name="ho-ten" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ngay-sinh">Ngày sinh:</label>
+                    <input type="date" id="ngay-sinh" name="ngay-sinh" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="gioi-tinh">Giới tính:</label>
+                    <select id="gioi-tinh" name="gioi-tinh" class="form-control" required>
+                        <option value="">Chọn giới tính</option>
+                        <option>Nam</option>
+                        <option>Nữ</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="so-dien-thoai">Số điện thoại:</label>
+                    <input type="tel" id="so-dien-thoai" name="so-dien-thoai" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="dia-chi">Địa chỉ:</label>
+                    <input type="text" id="dia-chi" name="dia-chi" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ten-chu-xe">Tên chủ xe:</label>
+                    <input type="text" id="ten-chu-xe" name="ten-chu-xe" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dia-chi-chu-xe">Địa chỉ chủ xe:</label>
+                    <input type="text" id="dia-chi-chu-xe" name="dia-chi-chu-xe" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bien-so-xe">Biển số xe:</label>
+                    <input type="text" id="bien-so-xe" name="bien-so-xe" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="so-khung">Số khung:</label>
+                    <input type="text" id="so-khung" name="so-khung" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="so-may">Số máy:</label>
+                    <input type="text" id="so-may" name="so-may" class="form-control" required>
+                </div>
+
+            </div>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+            <input type="button" name="next" class="next action-button" value="Next Step" />
+        </fieldset>
+        <fieldset>
+            <div class="form-card">
+                <h2 class="fs-title">Payment Information</h2>
+                <div class="radio-group">
+                    <div class='radio' data-value="credit"><img src="https://i.imgur.com/XzOzVHZ.jpg" width="200px" height="100px"></div>
+                    <div class='radio' data-value="paypal"><img src="https://i.imgur.com/jXjwZlj.jpg" width="200px" height="100px"></div>
+                    <br>
+                </div>
+                <label class="pay">Card Holder Name*</label>
+                <input type="text" name="holdername" placeholder="" />
+                <div class="row">
+                    <div class="col-9">
+                        <label class="pay">Card Number*</label>
+                        <input type="text" name="cardno" placeholder="" />
+                    </div>
+                    <div class="col-3">
+                        <label class="pay">CVC*</label>
+                        <input type="password" name="cvcpwd" placeholder="***" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <label class="pay">Expiry Date*</label>
+                    </div>
+                    <div class="col-9">
+                        <select class="list-dt" id="month" name="expmonth">
+                            <option selected>Month</option>
+                            <option>January</option>
+                            <option>February</option>
+                            <option>March</option>
+                            <option>April</option>
+                            <option>May</option>
+                            <option>June</option>
+                            <option>July</option>
+                            <option>August</option>
+                            <option>September</option>
+                            <option>October</option>
+                            <option>November</option>
+                            <option>December</option>
+                        </select>
+                        <select class="list-dt" id="year" name="expyear">
+                            <option selected>Year</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
+            <input type="button" name="make_payment" class="next action-button" value="Confirm" />
+        </fieldset>
+        <fieldset>
+            <div class="form-card">
+                <h2 class="fs-title text-center">Success !</h2>
+                <br><br>
+                <div class="row justify-content-center">
+                    <div class="col-3">
+                        <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image">
+                    </div>
+                </div>
+                <br><br>
+                <div class="row justify-content-center">
+                    <div class="col-7 text-center">
+                        <h5>You Have Successfully Signed Up</h5>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            var current_fs, next_fs, previous_fs; //fieldsets
+            var opacity;
+
+            $(".next").click(function () {
+
+                current_fs = $(this).parent();
+                next_fs = $(this).parent().next();
+
+                //Add Class Active
+                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+                //show the next fieldset
+                next_fs.show();
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        next_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+            });
+
+            $(".previous").click(function () {
+
+                current_fs = $(this).parent();
+                previous_fs = $(this).parent().prev();
+
+                //Remove class active
+                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+                //show the previous fieldset
+                previous_fs.show();
+
+                //hide the current fieldset with style
+                current_fs.animate({ opacity: 0 }, {
+                    step: function (now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+
+                        current_fs.css({
+                            'display': 'none',
+                            'position': 'relative'
+                        });
+                        previous_fs.css({ 'opacity': opacity });
+                    },
+                    duration: 600
+                });
+            });
+
+            $('.radio-group .radio').click(function () {
+                $(this).parent().find('.radio').removeClass('selected');
+                $(this).addClass('selected');
+            });
+
+            $(".submit").click(function () {
+                return false;
+            })
+
+        });
+        function hienThiMucDichSuDung() {
+            var loaiXe = document.getElementById("loai-xe").value;
+            var mucDichSuDungGroup1 = document.getElementById("muc-dich-su-dung-group1");
+            var mucDichSuDungGroup2 = document.getElementById("muc-dich-su-dung-group2");
+            if (loaiXe === "ô tô bán tải") {
+                mucDichSuDungGroup1.style.display = "block";
+            } else {
+                mucDichSuDungGroup1.style.display = "none";
+            }
+            if (loaiXe === "ô tô chở hàng") {
+                mucDichSuDungGroup2.style.display = "block";
+            } else {
+                mucDichSuDungGroup2.style.display = "none";
+            }
+        }
+        function tinhNgayKetThuc() {
+            var ngayBatDau = new Date(document.getElementById("ngay-bat-dau").value);
+            var thoiGianBaoHiem = document.getElementById("thoi-gian-bao-hiem").value;
+
+            if (thoiGianBaoHiem === "theo-thong-tin-kiem-dinh") {
+                document.getElementById('ngay-ket-thuc').removeAttribute('readonly');
+            } else {
+                var soNam = parseInt(thoiGianBaoHiem);
+                ngayBatDau.setFullYear(ngayBatDau.getFullYear() + soNam);
+                var ngayKetThucInput = document.getElementById("ngay-ket-thuc");
+                ngayKetThucInput.value = ngayBatDau.toISOString().split('T')[0];
+                ngayKetThucInput.setAttribute('readonly', 'readonly');
+
+                var gioBatDau = document.getElementById("gio-bat-dau").value;
+                var gioKetThucInput = document.getElementById("gio-ket-thuc");
+                gioKetThucInput.value = gioBatDau;
+                gioKetThucInput.setAttribute('readonly', 'readonly');
+            }
+        }
+
+      
+      
+       /* $(document).ready(function () {
+     // Ẩn form "Bảo hiểm TNDS bắt buộc" ban đầu
+     $("#bao-hiem-tnsd").hide();
+     $("#nextform").hide();
+
+     // Xử lý sự kiện khi nút "Tính Phí" được nhấn
+     $("input[name='tinhphi']").click(function (event) {
+         // Ngăn chặn hành động mặc định của biểu mẫu
+         
+
+         // Hiển thị form "Bảo hiểm TNDS bắt buộc"
+         $("#bao-hiem-tnsd").show();
+         $("#nextform").show();
+     });
+ }); */
+
+    </script>

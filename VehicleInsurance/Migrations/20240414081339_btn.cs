@@ -26,7 +26,8 @@ namespace VehicleInsurance.Migrations
                     NgayKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GioKetThuc = table.Column<TimeSpan>(type: "time", nullable: false),
                     MaGioiThieu = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DongY = table.Column<bool>(type: "bit", nullable: true)
+                    DongY = table.Column<bool>(type: "bit", nullable: true),
+                    
                 },
                 constraints: table =>
                 {
